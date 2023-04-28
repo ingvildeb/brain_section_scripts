@@ -41,8 +41,14 @@ def set_region_names(input_file):
     return regionnames
     
 
-def set_region_colors(input_file, R_col = "R", G_col = "G", B_col = "B"):    
-    regioncolors = pd.read_csv(input_file, sep=';', usecols = [R_col, G_col, B_col])
+def set_region_colors(input_file, file_type, R_col = "R", G_col = "G", B_col = "B"):
+
+    if file_type == "csv":    
+        regioncolors = pd.read_csv(input_file, sep=';', usecols = [R_col, G_col, B_col])
+        
+    if file_type == "excel":
+        regioncolors = pd.read_excel(input_file, sep=';', usecols = [R_col, G_col, B_col])
+        
     regioncolors = regioncolors / 255
         
     rgb_colors = []
