@@ -1,0 +1,127 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jun 15 11:10:43 2023
+
+@author: ingvieb
+"""
+
+from glob import glob
+import pandas as pd
+
+
+
+   
+    
+
+def get_renaming_dict(rename_file):
+
+    rename_scheme = pd.read_excel(rename_file)
+
+    orig_name_list = list(rename_scheme["Input file name"])
+    new_name_list = list(rename_scheme["Renamed"])
+
+    dict_of_renaming = dict(zip(orig_name_list, new_name_list))
+    
+    return dict_of_renaming, orig_name_list, new_name_list
+
+            
+
+def check_files_in_folders(folder1, folder2, folder1ext, folder2ext):
+    
+    folder1files = glob(folder1 + "*" + folder1ext)
+    folder2files = glob(folder2 + "*" + folder2ext)
+    
+    if len(folder1files) == len(folder2files):
+        message = "done"
+        print("All files are done!")
+        
+    else:
+        message = "not done"
+        print(len(folder2files), " of the", len(folder1files), " files are done")
+    
+    return message
+    
+    
+def name_files_in_folders(folder1, folder2, folder1ext, folder2ext):
+    
+    folder1files = glob(folder1 + "*" + folder1ext)
+    folder2files = glob(folder2 + "*" + folder2ext)
+    
+    folder1file_names = []
+    
+    for file in folder1files: 
+        folder1file_name = file.split("\\")[-1]
+        folder1file_names.append(folder1file_name)
+        
+        if "_thumbnail" in file:
+            folder1file_name = folder1file_name.split("_thumbnail")[0]
+        else:
+            folder1file_name = folder1file_name  
+    
+    folder2file_names = []
+    
+    for file in folder2files: 
+        folder2file_name = file.split("\\")[-1]
+        
+        if "_thumbnail" in file:
+            folder2file_name = folder2file_name.split("_thumbnail")[0]
+        else:
+            folder2file_name = folder2file_name            
+            
+        folder2file_names.append(folder2file_name)
+        
+    
+    return folder1file_names, folder2file_names
+        
+        
+
+def identify_missing_files(folder1files, folder2files, dict_of_correspondence = ""):
+            
+    missing_files = []
+    
+    if dict_of_correspondence:
+    
+        for file in folder1files:
+            
+            folder2file = dict_of_correspondence[file]
+            
+            if folder2file in folder2files:
+                continue
+            else:
+                missing_files.append(file)
+                
+        return missing_files
+    
+    else:
+        
+        for file in folder1files:
+            if file.split(".")[0] in folder2files:
+                continue
+            else:
+                missing_files.append(file)
+        return missing_files
+            
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
