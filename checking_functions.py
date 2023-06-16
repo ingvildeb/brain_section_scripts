@@ -17,8 +17,20 @@ def get_renaming_dict(rename_file):
 
     rename_scheme = pd.read_excel(rename_file)
 
-    orig_name_list = list(rename_scheme["Input file name"])
-    new_name_list = list(rename_scheme["Renamed"])
+    input_names = list(rename_scheme["Input file name"])
+    renamed_names = list(rename_scheme["Renamed"])
+    
+    orig_name_list = []
+    new_name_list = []
+    
+    for name in input_names:
+        orig_name = name.split(".")[0]
+        orig_name_list.append(orig_name)
+        
+    for name in renamed_names:
+        new_name = name.split(".")[0]
+        new_name_list.append(new_name)
+        
 
     dict_of_renaming = dict(zip(orig_name_list, new_name_list))
     
