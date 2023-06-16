@@ -50,7 +50,8 @@ def name_files_in_folders(folder1, folder2, folder1ext, folder2ext):
     folder1file_names = []
     
     for file in folder1files: 
-        folder1file_name = file.split("\\")[-1]
+        folder1file_name = (file.split("\\")[-1]).split(".")[0]
+        
         folder1file_names.append(folder1file_name)
         
         if "_thumbnail" in file:
@@ -61,7 +62,7 @@ def name_files_in_folders(folder1, folder2, folder1ext, folder2ext):
     folder2file_names = []
     
     for file in folder2files: 
-        folder2file_name = file.split("\\")[-1]
+        folder2file_name = (file.split("\\")[-1]).split(".")[0]
         
         if "_thumbnail" in file:
             folder2file_name = folder2file_name.split("_thumbnail")[0]
