@@ -119,8 +119,31 @@ def identify_missing_files(folder1files, folder2files, dict_of_correspondence = 
     
     
     
+def create_missing_files_df(missing_files, transformsheet = ""):
     
+    if transformsheet:
+        read_transformsheet = pd.read_excel(transformsheet)
+        df_list = []
+        
+        for file in missing_files:
+            row = read_transformsheet[read_transformsheet['Input file name'].str.contains(file)]
+            df_list.append(row)
+        
+        missing_rows = pd.concat(df_list)    
+        
+        return missing_rows
     
+    else:
+        df_list = []
+        
+        for file in missing_files:
+            data = {'Input file name':[file], 'Renamed':[file], 'Rotation CCW':['0'], 'Scale X':['1'], 'Scale Y':['1']}
+            row = pd.DataFrame(data)
+            df_list.append(row)
+            
+        missing_rows = pd.concat(df_list)
+        
+        return missing_rows
     
 
 
