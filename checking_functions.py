@@ -78,6 +78,7 @@ def name_files_in_folders(folder1, folder2, folder1ext, folder2ext):
 def identify_missing_files(folder1files, folder2files, dict_of_correspondence = ""):
             
     missing_files = []
+    missing_files_renamed = []
     
     if dict_of_correspondence:
     
@@ -89,8 +90,9 @@ def identify_missing_files(folder1files, folder2files, dict_of_correspondence = 
                 continue
             else:
                 missing_files.append(file)
+                missing_files_renamed.append(folder2file)
                 
-        return missing_files
+        return missing_files, missing_files_renamed
     
     else:
         
