@@ -5,7 +5,7 @@ Created on Fri Feb 10 09:52:16 2023
 @author: ingvieb
 """
 
-
+import pandas as pd
 
 
 def write_nut_quant_file(filename, storepath, nut_type = "Quantifier", name = "", analysis_type = "QUINT", quantifier_input_dir = "", 
@@ -74,4 +74,18 @@ def write_nut_transform_file(filename, storepath, nut_type = "Transform", name =
     
     
 
-#file_cells = open("Y:/Dopamine_receptors/Analysis/nut_files/" + filename + ".nut", "w+")
+
+
+def list_from_transform_sheet(transform_sheet):
+
+        read_transform_sheet = pd.read_excel(transform_sheet)
+    
+        nut_string_list = []
+        
+        for index, row in read_transform_sheet.iterrows():
+            nut_string = row["Input file name"] + "," + row["Renamed"] + "," + str(row["Rotation CCW"]) + "," + str(row["Scale X"]) + "," + str(row["Scale Y"])
+            nut_string_list.append(nut_string)
+            
+        return nut_string_list
+            
+            
