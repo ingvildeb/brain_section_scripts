@@ -50,7 +50,7 @@ def check_files_in_folders(folder1, folder2, folder1ext, folder2ext):
         
     else:
         message = "not done"
-        print(Back.RED + len(folder2files), " of the", len(folder1files), " files are done")
+        print(Back.RED + str(len(folder2files)), " of the", str(len(folder1files)), " files are done")
     
     return message
     
