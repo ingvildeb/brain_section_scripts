@@ -7,6 +7,7 @@ Created on Thu Jun 15 11:10:43 2023
 
 from glob import glob
 import pandas as pd
+from colorama import Fore, Back, Style
 
 
 
@@ -49,7 +50,7 @@ def check_files_in_folders(folder1, folder2, folder1ext, folder2ext):
         
     else:
         message = "not done"
-        print(len(folder2files), " of the", len(folder1files), " files are done")
+        print(Back.RED + len(folder2files), " of the", len(folder1files), " files are done")
     
     return message
     
