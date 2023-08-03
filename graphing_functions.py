@@ -6,19 +6,12 @@ Created on Fri Dec  2 13:17:08 2022
 """
 
 
-import os
+
 import pandas as pd
-import glob
-import re
 import numpy as np
-import xlwt
-from xlwt.Workbook import *
-from pandas import ExcelWriter
-import xlsxwriter
-from scipy.interpolate import interp1d
-import math
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
+
 
 
 def unique_list(sequence):
@@ -146,7 +139,38 @@ def create_line_graphs_per_hierarchy_level(customregsfile, superregions_col, reg
 
 
 
+def group_data_by_hierarchy(datafile, hreg_list, reg_to_hreg_dict, id_column_list = []):
+    
+    hierarchy_dict = {}
+    df_list = []
+    nan_list = []
+    num_regions_list = []
+    
+    for hreg in hreg_list:
+        included_regions = [k for k,v in reg_to_hreg_dict.items() if v == hreg]
+        hierarchy_dict[hreg] = included_regions    
+        
+        nan_count = datafile[hierarchy_dict[hreg]].isna().sum(axis=1)
+        avg_value = datafile[hierarchy_dict[hreg]].mean(axis=1)
+        
+        new_column = (pd.DataFrame([avg_value]).transpose())
+        new_column.columns = [hreg]
+        df_list.append(new_column)   
+        
+        nan_column = (pd.DataFrame([nan_count]).transpose())
+        nan_column.columns = [hreg]
+        nan_list.append(nan_column)
+        
+        num_regions = len(included_regions)
+        num_regions_list.append(num_regions)
 
+
+    df = pd.concat(df_list, axis = 1)
+    
+    id_cols = datafile[id_column_list]
+    full_df = pd.concat([id_cols, df], axis = 1)
+    
+    return(full_df)
 
 
 # def complete_regions_list():    
