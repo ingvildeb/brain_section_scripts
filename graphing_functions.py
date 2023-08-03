@@ -30,14 +30,14 @@ def unique_list(sequence):
 #     descriptives.to_excel(filename, sheet_name = sheetname)
     
     
-def get_descriptive_statistics(input_df, output_file, grouping = ""):
+def get_descriptive_statistics(input_df, output_file, grouping = None):
     if grouping:
         descriptives = input_df.groupby(grouping).describe()        
-        descriptives.to_excel(output_file + ".xlsx")
         
     else:
         descriptives = input_df.describe()
-        descriptives.to_excel(output_file + ".xlsx")
+    
+    descriptives.to_excel(output_file + ".xlsx")
 
 
 
