@@ -198,18 +198,6 @@ def calculate_ratio(df1, df2, countdf1 = '', countdf2 = '', countfilter = "yes",
     else:
         return(ratio)
 
-# def complete_regions_list():    
-    
-# ids_to_custom = pd.read_excel(r"Y:\Dopamine_receptors\Analysis\resources\ID_to_custom_Newmaster.xlsx")
-# mydict = ids_to_custom.set_index('region ID')['custom region'].to_dict()
-
-
-# df.columns = ["Region ID", "Deformation in voxels", "Section", "Deformation in um"]
-# df['Custom Region'] = df['Region ID'].map(mydict)
-# df = df[["Section", "Region ID", "Deformation in voxels", "Deformation in um", "Custom Region"]]
-# deformation_per_region = (df.groupby('Custom Region')["Deformation in um"].describe())
-
-
 
 
 
