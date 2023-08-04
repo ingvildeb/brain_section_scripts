@@ -184,6 +184,20 @@ def group_data_by_hierarchy(datafile, hreg_list, reg_to_hreg_dict, id_column_lis
     return(full_df)
 
 
+def calculate_ratio(df1, df2, countdf1 = '', countdf2 = '', countfilter = "yes", count_lim = 0):
+    ratio = (df1 / df2)
+    
+    if countfilter == "yes":
+        filter1 = countdf1 < count_lim
+        filter2 = countdf2 < count_lim
+        
+        ratio[filter1] = np.nan
+        ratio[filter2] = np.nan
+        return(ratio)
+    
+    else:
+        return(ratio)
+
 # def complete_regions_list():    
     
 # ids_to_custom = pd.read_excel(r"Y:\Dopamine_receptors\Analysis\resources\ID_to_custom_Newmaster.xlsx")
