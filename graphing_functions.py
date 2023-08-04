@@ -18,17 +18,6 @@ def unique_list(sequence):
     seen = set()
     return [x for x in sequence if not (x in seen or seen.add(x))]
 
-
-#old one, check that this is not used anywhere (except descriptive_data where it is updated)
-# def get_descriptive_statistics(inputdf, filename, parameter = "None", sheetname = "Sheet1"):
-    
-#     if parameter == "None":
-#         descriptives = inputdf.describe()
-#     else:
-#         descriptives = inputdf.groupby(parameter).describe()
-    
-#     descriptives.to_excel(filename, sheet_name = sheetname)
-    
     
 def get_descriptive_statistics(input_df, output_file, grouping = None):
     if grouping:
