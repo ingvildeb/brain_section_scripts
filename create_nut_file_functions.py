@@ -6,7 +6,7 @@ Created on Fri Feb 10 09:52:16 2023
 """
 
 import pandas as pd
-
+import glob
 
 def write_nut_quant_file(filename, storepath, nut_type = "Quantifier", name = "", analysis_type = "QUINT", quantifier_input_dir = "", 
                    quantifier_atlas_dir = "", label_file = "Allen Mouse Brain 2015", custom_label_file = "",
@@ -88,4 +88,38 @@ def list_from_transform_sheet(transform_sheet):
             
         return nut_string_list
             
-            
+
+def nut_list_from_files(folder_path):
+    file_list = glob.glob(folder_path)
+    nut_string_list = []
+    
+    for file in file_list:
+        nut_string_list.append(f"{file},{file},0,1,1")
+    
+    all_files_string = ", ".join(nut_string_list)
+    
+    return all_files_string
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
