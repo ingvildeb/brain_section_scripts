@@ -94,7 +94,8 @@ def nut_list_from_files(folder_path):
     nut_string_list = []
     
     for file in file_list:
-        nut_string_list.append(f"{file},{file},0,1,1")
+        fileName = file.split("\\")[-1]
+        nut_string_list.append(f"{fileName},{fileName},0,1,1")
     
     all_files_string = ", ".join(nut_string_list)
     
