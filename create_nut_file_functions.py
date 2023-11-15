@@ -90,7 +90,7 @@ def list_from_transform_sheet(transform_sheet):
             
 
 def nut_list_from_files(folder_path):
-    file_list = glob.glob(folder_path)
+    file_list = glob.glob(folder_path + "*")
     nut_string_list = []
     
     for file in file_list:
