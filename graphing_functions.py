@@ -57,11 +57,11 @@ def set_region_colors(input_file, file_type, R_col = "R", G_col = "G", B_col = "
     return rgb_colors
 
 
-def create_allen_bar_graph(filename, input_dir, error_dir, color_list, region_list, figsize = (50,10), dpi = 80, ylim = [0, 50000]):
+def create_allen_bar_graph(filename, input_dir, error_dir, color_list, region_list, figsize = (50,10), dpi = 80, ylim = [0, 50000], errsym="o", errcol="r"):
 
     plt.figure(figsize=(figsize))
     plt.bar(region_list, input_dir, color=color_list)
-    plt.errorbar(region_list, input_dir, yerr=error_dir, fmt="o", color="r")
+    plt.errorbar(region_list, input_dir, yerr=error_dir, fmt=errsym, color=errcol)
     plt.xticks(rotation=90) 
     plt.ylim(ylim)
 
