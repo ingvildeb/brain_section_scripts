@@ -189,7 +189,19 @@ def calculate_ratio(df1, df2, countdf1 = '', countdf2 = '', countfilter = "yes",
         return(ratio)
 
 
-
+def calculate_relative_expression(df1, df2, countdf1 = '', countdf2 = '', countfilter = "yes", count_lim = 0):
+    ratio = (df1 - df2) / (df1 + df2)
+    
+    if countfilter == "yes":
+        filter1 = countdf1 < count_lim
+        filter2 = countdf2 < count_lim
+        
+        ratio[filter1] = np.nan
+        ratio[filter2] = np.nan
+        return(ratio)
+    
+    else:
+        return(ratio)
 
 
 
