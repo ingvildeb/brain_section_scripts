@@ -89,8 +89,8 @@ def list_from_transform_sheet(transform_sheet):
         return nut_string_list
             
 
-def nut_list_from_files(folder_path):
-    file_list = glob.glob(folder_path + "*")
+def nut_list_from_files(folder_path, extension="tif"):
+    file_list = glob.glob(f"{folder_path}*.{extension}")
     nut_string_list = []
     
     for file in file_list:
