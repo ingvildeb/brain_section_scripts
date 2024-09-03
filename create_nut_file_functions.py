@@ -74,13 +74,13 @@ def write_nut_transform_file(filename, storepath, nut_type = "Transform", name =
     
     
 
-def write_nut_resize_file(filename, storepath, nut_type = "Resize", name = "", transform_input_dir = "", transform_output_dir = "", resize_type = "Percent", resize_size ="25"):
+def write_nut_resize_file(filename, storepath, nut_type = "Resize", name = "", resize_input_dir = "", resize_output_dir = "", resize_type = "Percent", resize_size ="25"):
     
     file_cells = open(storepath + filename + ".nut", "w+")
     file_cells.write(f"type = {nut_type}\n")    
     file_cells.write(f"name = {name}\n")   
-    file_cells.write(f"transform_input_dir = {transform_input_dir}\n")
-    file_cells.write(f"transform_output_dir = {transform_output_dir}\n")  
+    file_cells.write(f"resize_input_dir = {resize_input_dir}\n")
+    file_cells.write(f"resize_output_dir = {resize_output_dir}\n")  
     file_cells.write(f"resize_type = {resize_type}\n")  
     file_cells.write(f"resize_size = {resize_size}\n")  
     
