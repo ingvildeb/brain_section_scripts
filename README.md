@@ -1,2 +1,2 @@
-# nutil_scripts
-Scripts for working with the nutil software for large data collections
+# brainsection_scripts
+Scripts for working with large collections of brain sections
