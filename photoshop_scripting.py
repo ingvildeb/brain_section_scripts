@@ -9,6 +9,7 @@ import re
 # Creating a list of the tif files to be photoshopped
 # Replace tif_path with the path to your images
 tif_path = r"Y:\2021_Bjerke_DevMouse_projects\01_DATA\to_photoshop\ready//"
+out_path = r"Y:\2021_Bjerke_DevMouse_projects\01_DATA\to_photoshop\done//"
 tifs = glob.glob(rf"{tif_path}*.tif")
 tifs.extend(glob.glob(rf"{tif_path}*.tiff"))
 names = [os.path.basename(tif) for tif in tifs]
@@ -35,8 +36,7 @@ for name in names:
     
     else:
         path = rf"{tif_path}{name}"
-        outPath = rf"{tif_path}{name}"
-        print(path,outPath)
+        outPath = rf"{out_path}{name}"
     
         with Session(path, action="open") as ps:
             ps.app.preferences.rulerUnits = ps.Units.Percent
