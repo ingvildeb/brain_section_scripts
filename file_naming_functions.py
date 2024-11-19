@@ -92,7 +92,10 @@ def create_renaming_scheme(tifPath, savePath, prefix, maxScenes, underscores, ch
 
 
     for file in fileList:
-        origNameList.append(os.path.basename(file))
+        origName = os.path.basename(file)
+        origName = origName.split(".")[0]
+        origNameList.append(origName)
+
         fileName = clean_tiff_name(file)
         sectionStart = (fileName.split(".")[0]).split("_")[underscores:]         
         
@@ -117,17 +120,17 @@ def create_renaming_scheme(tifPath, savePath, prefix, maxScenes, underscores, ch
             else:
                  channel = mergeName
 
-            newName = f"{prefix}_s{section}_{channel}.tif" 
+            newName = f"{prefix}_s{section}_{channel}" 
 
         
         else:
-            newName = f"{prefix}_{section}.tif"            
+            newName = f"{prefix}_s{section}"            
         
         newNameList.append(newName)
             
 
     renamingScheme = pd.DataFrame(zip(origNameList,newNameList),columns=["Input file name","Renamed"])
-    renamingScheme.to_excel(f"{prefix}_renamingScheme.xlsx", index=False)
+    renamingScheme.to_excel(fr"{savePath}\\{prefix}_renamingScheme.xlsx", index=False)
         
     return(origNameList,newNameList)
             
@@ -147,7 +150,7 @@ def find_duplicate_names(renamingScheme):
 
 
 
-def rename_files(tifPath, renamingScheme):
+def rename_files(tifPath, renamingScheme, extension=".tif"):
     
     renamingScheme = pd.read_excel(renamingScheme)
     
@@ -157,37 +160,59 @@ def rename_files(tifPath, renamingScheme):
     renameDict = dict(zip(origName, newName))
 
     for key, value in renameDict.items():
-        fullpath = tifPath + os.sep + key
-        outpath = tifPath + os.sep + value
+        fullpath = f"{tifPath}{os.sep}{key}{extension}"
+        outpath = f"{tifPath}{os.sep}{value}{extension}"
 
         if os.path.exists(fullpath):
             os.rename(fullpath,outpath)
 
 
+#### Example usage
+## Assumptions
+##### 1: files to be renamed must have the scene number indicated by "sX". There must not be any other instances of "sX" than the scene name.
+##### 2: section numbers corresponding to the scenes are in the file name, separated by underscores from each other and the rest of the file name.
+
+## For max scenes, fill in the maximum number of scenes in any of the tiff files
+## For underscores, fill in the number of underscores in front of where the section numbers begin 
+
+
+
+ID = "255"
+age = "P21"
+sex = "F"
+stain = "Cresyl_violet"
+
+if stain == "Parvalbumin":
+    stain_short = "parv"
+elif stain == "Calbindin":
+    stain_short = "calb"
+elif stain == "Cresyl_violet":
+    stain_short = "CV"
+
+basePath = rf"Y:\2021_Bjerke_DevMouse_projects\01_DATA\{age}\{stain}\Mouse{ID}"
+
+origNameList,newNameList = create_renaming_scheme(tifPath = rf"{basePath}\\1_original_tiffs\\",
+                                                  savePath = rf"{basePath}\\",
+                                                  prefix = f"mouse{ID}_{age}_{sex}_{stain_short}",
+                                                  maxScenes = 3,
+                                                  underscores = 3)
 
 
 
 
 
+find_duplicate_names(rf"{basePath}\\mouse{ID}_{age}_{sex}_{stain_short}_renamingScheme.xlsx")
 
 
 
+#rename tiffs
+rename_files(rf"{basePath}\\1_original_tiffs\\",
+             rf"{basePath}\\mouse{ID}_{age}_{sex}_{stain_short}_renamingScheme.xlsx")
 
-
-
-
-
-
-origNameList,newNameList = create_renaming_scheme(tifPath = r"Y:\2021_Bjerke_DevMouse_projects\01_DATA\P9\Perineuronal_nets\Mouse399\1_original_tiffs\\",
-                                                  savePath = r"C:\Users\ingvieb\OneDrive - Universitetet i Oslo\Documents\Github\CalciMAP",
-                                                  prefix = "myTest",
-                                                  maxScenes = 4,
-                                                  underscores = 2,
-                                                  channels = ["AF488", "AF647", "DAPI"],
-                                                  mergeName = "PNN-PV")
-
-rename_files(r"Y:\2021_Bjerke_DevMouse_projects\01_DATA\P9\Perineuronal_nets\Mouse399\1_original_tiffs - Copy",
-             r"C:\Users\ingvieb\OneDrive - Universitetet i Oslo\Documents\Github\CalciMAP\myTest_renamingScheme.xlsx")
+#rename thumbs
+rename_files(rf"{basePath}\\1_original_tiffs\\thumbnails\\",
+             rf"{basePath}\\mouse{ID}_{age}_{sex}_{stain_short}_renamingScheme.xlsx",
+             extension="_thumbnail.png")
 
 
 
