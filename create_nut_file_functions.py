@@ -134,28 +134,6 @@ def create_nut_transform_sheet(folder_path, output_name, extension="tif"):
 
     return df
      
-        
- ### Example usage
-
- # Note: In this example, input and output files will be given the same names (the name of the input files).
- # If you need to rename your files, see "file_naming_functions.py" in this repository
-
-ID = "276"
-age = "P14"
-sex = "M"
-stain = "Calbindin"
-
-if stain == "Parvalbumin":
-    stain_short = "parv"
-elif stain == "Calbindin":
-    stain_short = "calb"
-elif stain == "Cresyl_violet":
-    stain_short = "CV"
-
-basePath = rf"Y:\2021_Bjerke_DevMouse_projects\01_DATA\{age}\{stain}\Mouse{ID}"
-
-transform_sheet = create_nut_transform_sheet(rf"{basePath}\\1_original_tiffs\\", 
-                                             f"{basePath}\\mouse{ID}_{age}_{sex}_{stain_short}_transform")
 
 
 
