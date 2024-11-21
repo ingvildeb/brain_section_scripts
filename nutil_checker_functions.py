@@ -156,10 +156,14 @@ def change_nut_file_files(nut_file, nut_string):
         file.writelines(lines)                
                 
                 
-    
+
+
+### Example usage
+# Provide a directory that contains all the nut files to be checked
     
 nut_file_directory = r"Y:\2021_Bjerke_DevMouse_projects\01_DATA\transform_IEB//"
 
+# Check transform files (thumbnails only or not)
 
 files = glob.glob(rf"{nut_file_directory}/*.nut")
 done_path = f"{nut_file_directory}done//"
@@ -196,8 +200,8 @@ for file in files:
         
         
         
-        
-        
+# Check resize files
+       
 for file in files:
     print(f"Checking {os.path.basename(file)}")
     message, len_input_files, len_output_files = check_nut_resize_file(file, "png")
