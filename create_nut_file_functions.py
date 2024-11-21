@@ -85,9 +85,7 @@ def write_nut_resize_file(filename, storepath, nut_type = "Resize", name = "", r
     file_cells.write(f"resize_size = {resize_size}\n")  
     
     file_cells.close() 
-    
-    
-    
+     
     
 
 def list_from_transform_sheet(transform_sheet):
@@ -116,8 +114,51 @@ def nut_list_from_files(folder_path, extension="tif"):
     return all_files_string
     
     
-    
-    
+def create_nut_transform_sheet(folder_path, output_name, extension="tif"):
+
+    file_list = glob.glob(f"{folder_path}*.{extension}")
+    file_names = []
+
+    for file in file_list:
+        fileName = file.split("\\")[-1]
+        file_names.append(fileName)
+
+    df = pd.DataFrame(columns = ["Input file name", "Renamed", "Rotation CCW", "Scale X", "Scale Y"])
+    df["Input file name"] = file_names
+    df["Renamed"] = file_names
+    df["Rotation CCW"] = 0
+    df["Scale X"] = 1
+    df["Scale Y"] = 1
+
+    df.to_excel(f"{output_name}.xlsx", index=False)
+
+    return df
+     
+        
+ ### Example usage
+
+ # Note: In this example, input and output files will be given the same names (the name of the input files).
+ # If you need to rename your files, see "file_naming_functions.py" in this repository
+
+ID = "276"
+age = "P14"
+sex = "M"
+stain = "Calbindin"
+
+if stain == "Parvalbumin":
+    stain_short = "parv"
+elif stain == "Calbindin":
+    stain_short = "calb"
+elif stain == "Cresyl_violet":
+    stain_short = "CV"
+
+basePath = rf"Y:\2021_Bjerke_DevMouse_projects\01_DATA\{age}\{stain}\Mouse{ID}"
+
+transform_sheet = create_nut_transform_sheet(rf"{basePath}\\1_original_tiffs\\", 
+                                             f"{basePath}\\mouse{ID}_{age}_{sex}_{stain_short}_transform")
+
+
+
     
     
     
