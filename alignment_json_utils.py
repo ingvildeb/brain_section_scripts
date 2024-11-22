@@ -1,14 +1,16 @@
 import json
+import glob
+from PIL import Image 
+import re
 
-old_json = r"Y:\2021_Bjerke_DevMouse_projects\QuickNII_registration_workspace\test_folder\mouse650_jointAnchoring_final_nonlinear.json"
-new_json = r"Y:\2021_Bjerke_DevMouse_projects\QuickNII_registration_workspace\test_folder\mouse650_jointWithPNN.json"
-
+# Basic function to read json data
 
 def read_json(json_path):
     with open(json_path, 'r') as f:
         json_data = json.load(f)
     return json_data
 
+# Function to parse a QuickNII or VisuAlign JSON into dictionaries of anchorings, markers, widths and heights, with the section nr as the key
 
 def parse_anchoring_data(json_data):
     anchorings_dict = {}
@@ -27,6 +29,8 @@ def parse_anchoring_data(json_data):
     return anchorings_dict, markers_dict, widths_dict, heights_dict
 
 
+# Function to convert VisuAlign markers made on images with a given resolution to images of another resolution.
+
 def convert_markers(old_markers, old_width, old_height, new_width, new_height):
     new_markers = []
     for marker_xy in old_markers:
@@ -43,10 +47,12 @@ def convert_markers(old_markers, old_width, old_height, new_width, new_height):
         new_markers.append([xfrom_new, yfrom_new, xto_new, yto_new])
     return new_markers
 
+# Function to create a QuickNII JSON dictionary with empty slice data
 
 def create_quicknii_json_dict(name, target, target_resolution):
     return {"name": name, "target": target, "target-resolution": target_resolution, "slices": []}
 
+# Function to create a QuickNII / VisuAlign JSON slice dictionary based on input values
 
 def get_slice_dict(nr, width, height, filename, anchoring=None, markers=None):
     slice_dict = {
@@ -61,6 +67,7 @@ def get_slice_dict(nr, width, height, filename, anchoring=None, markers=None):
         slice_dict["markers"] = markers
     return slice_dict
 
+# Function to insert anchorings and / or markers from one JSON into another
 
 def insert_existing_anchorings(old_json, new_json, json_name, target_atlas, target_resolution, same_resolution=True):
     json_dict = create_quicknii_json_dict(json_name, target_atlas, target_resolution)
@@ -93,4 +100,33 @@ def insert_existing_anchorings(old_json, new_json, json_name, target_atlas, targ
 
     return json_dict
 
+# Function to create a QuickNII / VisuAlign JSON file from a folder of .png files
 
+def create_quicknii_file(files_path, name, target, target_resolution):
+    files = glob.glob(f"{files_path}*.png")
+    
+    for file in files:
+        img = Image.open(file) 
+          
+        width = img.width 
+        height = img.height 
+        filename = os.path.basename(file)
+        nr = re.findall("[s][0-9][0-9][0-9]", filename)
+        
+        if len(nr) > 1:
+            print("error: more than one potential section number in file name!")
+            break
+        else:
+            nr = nr[0]
+            nr = re.sub("[s]", "", nr)
+            nr = int(nr)
+    
+        slice_dict = get_slice_dict(nr, width, height, filename)
+        
+        slice_dicts.append(slice_dict)
+
+    sorted_slices_dicts = sorted(slice_dicts, key=lambda x: (x['nr']))
+    
+
+
+# Function to split a QuickNII / VisuAlign JSON file based on part of filename
