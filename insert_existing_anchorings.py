@@ -62,7 +62,7 @@ def get_slice_dict(nr, width, height, filename, anchoring=None, markers=None):
     return slice_dict
 
 
-def insert_existing_anchorings(old_json, new_json, same_resolution=True):
+def insert_existing_anchorings(old_json, new_json, json_name, target_atlas, target_resolution, same_resolution=True):
     json_dict = create_quicknii_json_dict("testing", "DeMBAv2_P35_template.cutlas", [570, 705, 400])
 
     old_json_data = read_json(old_json)
@@ -94,4 +94,3 @@ def insert_existing_anchorings(old_json, new_json, same_resolution=True):
     return json_dict
 
 
-json_dict = insert_existing_anchorings(old_json, new_json)
