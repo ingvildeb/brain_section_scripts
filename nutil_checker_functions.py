@@ -156,62 +156,6 @@ def change_nut_file_files(nut_file, nut_string):
         file.writelines(lines)                
                 
                 
-
-
-### Example usage
-# Provide a directory that contains all the nut files to be checked
-    
-nut_file_directory = r"Y:\2021_Bjerke_DevMouse_projects\01_DATA\transform_IEB//"
-
-# Check transform files (thumbnails only or not)
-
-files = glob.glob(rf"{nut_file_directory}/*.nut")
-done_path = f"{nut_file_directory}done//"
-
-for file in files:    
-    print(f"Checking {os.path.basename(file)}")
-    _, _, _, only_thumbnails = read_nut_transform_file(file)
-    name = os.path.basename(file)
-
-    
-    if only_thumbnails == "Yes":
-        missing_files = check_nut_file(file) 
-        print(f"{len(missing_files)} files missing")
-        if len(missing_files) > 0:
-            nut_string = missing_files_to_string(missing_files)
-            change_nut_file_files(file, f"transform_files = {nut_string}")
-            
-        else:
-            shutil.move(file, f"{done_path}{name}")
-    
-    if only_thumbnails == "No":
-        missing_files, missing_thumbs = check_nut_file(file) 
-        print(f"{len(missing_files)} tiffs missing")
-        print(f"{len(missing_thumbs)} thumbnails missing")
-        
-        if len(missing_thumbs) > 0:
-            nut_string = missing_files_to_string(missing_thumbs)
-            change_nut_file_files(file, f"transform_files = {nut_string}")
-            
-        else:
-            shutil.move(file, f"{done_path}{name}")
-    
-    
-        
-        
-        
-# Check resize files
-       
-for file in files:
-    print(f"Checking {os.path.basename(file)}")
-    message, len_input_files, len_output_files = check_nut_resize_file(file, "png")
-    print(message, f"{len_output_files} out of {len_input_files} done")
-    
-    
-    
-    
-    
-    
     
     
     
