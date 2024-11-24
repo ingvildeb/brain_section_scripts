@@ -5,11 +5,13 @@ import photoshop.api as ps
 import glob
 import os
 import re
+import shutil
 
 # Creating a list of the tif files to be photoshopped
 # Replace tif_path with the path to your images
 tif_path = r"Y:\2021_Bjerke_DevMouse_projects\01_DATA\to_photoshop\ready//"
-out_path = r"Y:\2021_Bjerke_DevMouse_projects\01_DATA\to_photoshop\done//"
+out_path = r"Y:\2021_Bjerke_DevMouse_projects\01_DATA\to_photoshop\photoshopped//"
+done_path = r"Y:\2021_Bjerke_DevMouse_projects\01_DATA\to_photoshop\ready/done//"
 tifs = glob.glob(rf"{tif_path}*.tif")
 tifs.extend(glob.glob(rf"{tif_path}*.tiff"))
 names = [os.path.basename(tif) for tif in tifs]
@@ -35,8 +37,11 @@ for name in names:
         print("error: no section number in file name! please ensure section numbers are provided in the format sXXX.")
     
     else:
+        snum = snum[0]
+        print(ID,snum)
         path = rf"{tif_path}{name}"
         outPath = rf"{out_path}{name}"
+        donePath = rf"{done_path}{name}"
     
         with Session(path, action="open") as ps:
             ps.app.preferences.rulerUnits = ps.Units.Percent
@@ -44,7 +49,9 @@ for name in names:
             options = ps.TiffSaveOptions()
             options.imageCompression = 2
             doc = ps.active_document
-            doc.saveAs(outPath, options, True)
+            doc.saveAs(outPath, options, asCopy=True)
+        
+        shutil.move(path, donePath)
             
     
 
