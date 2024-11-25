@@ -70,7 +70,7 @@ def get_slice_dict(nr, width, height, filename, anchoring=None, markers=None):
 
 # Function to insert anchorings and / or markers from one JSON into another
 
-def insert_existing_anchorings(old_json, new_json, json_name, target_atlas, target_resolution, same_resolution=True):
+def insert_existing_anchorings(old_json, new_json, out_path, json_name, target_atlas, target_resolution, same_resolution=True):
     json_dict = create_quicknii_json_dict(json_name, target_atlas, target_resolution)
 
     old_json_data = read_json(old_json)
@@ -99,7 +99,8 @@ def insert_existing_anchorings(old_json, new_json, json_name, target_atlas, targ
 
         json_dict["slices"].append(slice_dict)
 
-    return json_dict
+    with open(rf"{out_path}.json", "w") as outfile:
+        json.dump(json_dict, outfile)  
 
 # Function to create a QuickNII / VisuAlign JSON file from a folder of .png files
 
