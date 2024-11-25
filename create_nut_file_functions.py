@@ -97,6 +97,8 @@ def list_from_transform_sheet(transform_sheet):
         for index, row in read_transform_sheet.iterrows():
             nut_string = row["Input file name"] + "," + row["Renamed"] + "," + str(row["Rotation CCW"]) + "," + str(row["Scale X"]) + "," + str(row["Scale Y"])
             nut_string_list.append(nut_string)
+        
+        all_files_string = ", ".join(nut_string_list)
             
         return nut_string_list
             
