@@ -104,6 +104,7 @@ def insert_existing_anchorings(old_json, new_json, json_name, target_atlas, targ
 
 def create_quicknii_slicedict(files_path, name, target, target_resolution):
     files = glob.glob(f"{files_path}*.png")
+    slice_dicts = []
     
     for file in files:
         img = Image.open(file) 
