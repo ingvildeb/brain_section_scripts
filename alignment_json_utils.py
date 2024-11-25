@@ -2,6 +2,7 @@ import json
 import glob
 from PIL import Image 
 import re
+import os
 
 # Basic function to read json data
 
