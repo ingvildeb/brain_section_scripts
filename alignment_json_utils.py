@@ -102,7 +102,7 @@ def insert_existing_anchorings(old_json, new_json, json_name, target_atlas, targ
 
 # Function to create a QuickNII / VisuAlign JSON file from a folder of .png files
 
-def create_quicknii_file(files_path, name, target, target_resolution):
+def create_quicknii_slicedict(files_path, name, target, target_resolution):
     files = glob.glob(f"{files_path}*.png")
     
     for file in files:
@@ -126,6 +126,8 @@ def create_quicknii_file(files_path, name, target, target_resolution):
         slice_dicts.append(slice_dict)
 
     sorted_slices_dicts = sorted(slice_dicts, key=lambda x: (x['nr']))
+
+    return sorted_slices_dicts
     
 
 
