@@ -129,7 +129,7 @@ def create_quicknii_slicedict(files_path, out_path, name, target, target_resolut
         slice_dicts.append(slice_dict)
 
     sorted_slices_dicts = sorted(slice_dicts, key=lambda x: (x['nr']))
-    json_dict["slices"].append([i for i in sorted_slices_dicts])
+    json_dict["slices"] = sorted_slices_dicts
 
     with open(rf"{out_path}.json", "w") as outfile:
         json.dump(json_dict, outfile)  
