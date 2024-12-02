@@ -138,7 +138,7 @@ def create_quicknii_slicedict(files_path, out_path, name, target, target_resolut
 
 
 # Function to split a QuickNII / VisuAlign JSON file based on part of filename
-def split_json(split_string):
+def split_json(json_data, split_string):
     specific_slices = []
 
     for s in json_data['slices']:
