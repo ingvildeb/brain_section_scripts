@@ -7,6 +7,7 @@ Created on Fri Feb 10 09:52:16 2023
 
 import pandas as pd
 import glob
+import os
 
 def write_nut_quant_file(filename, storepath, nut_type = "Quantifier", name = "", analysis_type = "QUINT", quantifier_input_dir = "", 
                    quantifier_atlas_dir = "", label_file = "Allen Mouse Brain 2015", custom_label_file = "",
@@ -103,8 +104,8 @@ def list_from_transform_sheet(transform_sheet):
         return nut_string_list
             
 
-def nut_list_from_files(folder_path, extension="tif"):
-    file_list = glob.glob(f"{folder_path}*.{extension}")
+def nut_list_from_files(folder_path, extension=".tif"):
+    file_list = glob.glob(f"{folder_path}*{extension}")
     nut_string_list = []
     
     for file in file_list:
@@ -122,7 +123,7 @@ def create_nut_transform_sheet(folder_path, output_name, extension=".tif"):
     file_names = []
 
     for file in file_list:
-        file_name = file.split("\\")[-1]
+        file_name = os.path.basename(file)
         file_name = file.split(f"{extension}")[0]
         file_names.append(file_name)
 
