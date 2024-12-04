@@ -116,14 +116,15 @@ def nut_list_from_files(folder_path, extension="tif"):
     return all_files_string
     
     
-def create_nut_transform_sheet(folder_path, output_name, extension="tif"):
+def create_nut_transform_sheet(folder_path, output_name, extension=".tif"):
 
-    file_list = glob.glob(f"{folder_path}*.{extension}")
+    file_list = glob.glob(f"{folder_path}*{extension}")
     file_names = []
 
     for file in file_list:
-        fileName = file.split("\\")[-1]
-        file_names.append(fileName)
+        file_name = file.split("\\")[-1]
+        file_name = file.split(f"{extension}")[0]
+        file_names.append(file_name)
 
     df = pd.DataFrame(columns = ["Input file name", "Renamed", "Rotation CCW", "Scale X", "Scale Y"])
     df["Input file name"] = file_names
