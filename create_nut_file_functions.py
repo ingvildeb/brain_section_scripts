@@ -124,7 +124,7 @@ def create_nut_transform_sheet(folder_path, output_name, extension=".tif"):
 
     for file in file_list:
         file_name = os.path.basename(file)
-        file_name = file.split(f"{extension}")[0]
+        file_name = file_name.split(f"{extension}")[0]
         file_names.append(file_name)
 
     df = pd.DataFrame(columns = ["Input file name", "Renamed", "Rotation CCW", "Scale X", "Scale Y"])
