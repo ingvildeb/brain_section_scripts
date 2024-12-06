@@ -188,7 +188,7 @@ def sequential_to_real_sections(filepath, first_number, increment, extension = "
         
     return renumbering_scheme
 
-def exchange_sequential_sections(filepath, renumbering_scheme):
+def exchange_sequential_sections(filepath, renumbering_scheme, extension = ".tif"):
     files = glob(rf"{filepath}*{extension}")
 
     for file in files:
