@@ -192,6 +192,7 @@ def exchange_sequential_sections(filepath, renumbering_scheme, extension = ".tif
     files = glob(rf"{filepath}*{extension}")
 
     for file in files:
+        name = os.path.basename(file)
         snum_orig = (re.findall("[s][0-9][0-9][0-9]", name))[0]
         real_snum = renumbering_scheme.get(snum_orig)
         new_name = file.replace(snum_orig, real_snum)
