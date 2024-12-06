@@ -165,3 +165,18 @@ def rename_files(tifPath, renamingScheme, extension=".tif"):
 
         if os.path.exists(fullpath):
             os.rename(fullpath,outpath)
+
+def sequential_to_real_sections(filepath, first_number, increment, extension = ".tif"):
+    files = glob.glob(f"{filepath}*{extension}")
+
+    snum_counter = first_number - 1
+
+    for file in files:
+        name = os.path.basename(file)
+        snum_orig = (re.findall("[s][0-9][0-9][0-9]", name))[0]
+        snum_orig = re.sub("[s]", "", snum_orig)
+        snum_orig = int(snum_orig)
+        real_snum = snum_orig + (snum_counter)
+        snum_counter = snum_counter + increment
+        
+        print(f"{snum_orig} will become {real_snum}")
