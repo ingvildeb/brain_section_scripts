@@ -227,4 +227,4 @@ def exchange_sequential_sections(filepath, renumbering_scheme, json_file=None, e
                 slice['filename'] = old_filename.replace(old_snum, new_snum)
 
         with open(json_file, 'w') as f:
-            json.dump(data, f, indent=4)
+            json.dump(data, f)
