@@ -188,13 +188,22 @@ def sequential_to_real_sections(filepath, first_number, increment, extension = "
         
     return renumbering_scheme
 
-def exchange_sequential_sections(filepath, renumbering_scheme, extension = ".tif"):
-    files = glob(rf"{filepath}*{extension}")
+def exchange_sequential_sections(filepath, renumbering_scheme, extension=".tif"):
+    temp_suffix = '_temp'
 
+    # First pass: Rename files to temporary names
+    files = glob(rf"{filepath}*{extension}")
     for file in files:
         name = os.path.basename(file)
-        snum_orig = (re.findall("[s][0-9][0-9][0-9]", name))[0]
-        real_snum = renumbering_scheme.get(snum_orig)
-        new_name = file.replace(snum_orig, real_snum)
-        os.rename(file,new_name)
+        snum_orig = (re.findall(r"[s][0-9][0-9][0-9]", name))[0]
+        temp_name = file.replace(snum_orig, f"{snum_orig}{temp_suffix}")
+        os.rename(file, temp_name)
 
+    # Second pass: Rename files to final desired names
+    temp_files = glob(rf"{filepath}*{temp_suffix}{extension}")
+    for temp_file in temp_files:
+        name = os.path.basename(temp_file)
+        snum_orig = (re.findall(r"[s][0-9][0-9][0-9]", name))[0]
+        real_snum = renumbering_scheme.get(snum_orig)
+        final_name = temp_file.replace(f"{snum_orig}{temp_suffix}", real_snum)
+        os.rename(temp_file, final_name)
