@@ -188,7 +188,7 @@ def sequential_to_real_sections(filepath, first_number, increment, extension = "
         
     return renumbering_scheme
 
-def exchange_sequential_sections(filepath, renumbering_scheme, extension=".tif"):
+def exchange_sequential_sections(filepath, renumbering_scheme, json_file=None, extension=".tif"):
     temp_suffix = '_temp'
 
     # First pass: Rename files to temporary names
@@ -207,3 +207,23 @@ def exchange_sequential_sections(filepath, renumbering_scheme, extension=".tif")
         real_snum = renumbering_scheme.get(snum_orig)
         final_name = temp_file.replace(f"{snum_orig}{temp_suffix}", real_snum)
         os.rename(temp_file, final_name)
+
+    if json_file:
+        with open(json_file, 'r') as f:
+            data = json.load(f)
+
+        # Update JSON: renumbering "nr" and "filename" fields
+        for slice in data['slices']:
+            old_nr = slice['nr']
+            old_filename = slice['filename']
+            old_snum = f"s{old_nr:03}"
+            new_snum = renumbering_scheme.get(old_snum)
+            
+            if new_snum:
+                # Get new number from the new_snum
+                new_nr = int(new_snum[1:])  # extract the number part from "sNNN"
+                slice['nr'] = new_nr
+                slice['filename'] = old_filename.replace(old_snum, new_snum)
+
+        with open(json_file, 'w') as f:
+            json.dump(data, f, indent=4)
