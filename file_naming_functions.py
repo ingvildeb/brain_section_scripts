@@ -9,6 +9,7 @@ from glob import glob
 import os
 import re
 import pandas as pd
+import json
 
 def flatten_comprehension(matrix):
     return [item for row in matrix for item in row]
