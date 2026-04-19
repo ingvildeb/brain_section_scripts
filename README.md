@@ -26,17 +26,10 @@ A common project flow looks like this:
 6. Quantify data in Nutil.
 7. Post-process region-wise output for plotting, statistics, interpolation, or downstream analysis.
 
-Several protocols on protocols.io describe the surrounding experimental and image-preparation workflow and point back to scripts in this repository:
-
-- Researcher page: <https://www.protocols.io/researchers/ingvild-elise-bjerke>
+Several protocols on protocols.io describe the surrounding experimental and image-preparation workflow and point back to scripts in this repository (<https://www.protocols.io/researchers/ingvild-elise-bjerke>)
 - Assessing histological image series for errors in serial order, flipping and mounting: <https://www.protocols.io/view/assessing-histological-image-series-for-errors-in-dpan5ide.html>
 - Exporting and renaming raw microscopy images: <https://www.protocols.io/view/exporting-and-renaming-raw-microscopy-images-14egn985zl5d/v1>
 - Correcting mounting errors in histological images using Photoshop: <https://www.protocols.io/view/correcting-mounting-errors-in-histological-images-4r3l2qj6pl1y/v1>
-
-In particular, the protocol on assessing image series explicitly refers to:
-
-- `create_nut_file_functions.py` for creating Nutil transform files and transform templates
-- `validation_functions.py` for checking that all channels of a section receive the same transform parameters and that transform sheets do not contain duplicate names
 
 ## Who this is for
 
